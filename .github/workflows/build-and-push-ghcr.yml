@@ -27,9 +27,6 @@ jobs:
           - target: api-build
             file: Dockerfile.multi
             image_name: vectorchat-dev-api
-          - target: node
-            file: Dockerfile
-            image_name: vectorchat-dev
 
     steps:
       - name: Checkout repository
@@ -53,6 +50,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v5
